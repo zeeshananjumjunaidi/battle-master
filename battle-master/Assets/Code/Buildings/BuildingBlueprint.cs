@@ -7,7 +7,9 @@ public class BuildingBlueprint : MonoBehaviour
 
     RaycastHit hit;
     Vector3 currentPos;
-    public GameObject prefab;
+    public GameObject animationPrefab;
+    public GameObject buildingPrefab;
+    GameObject animationPrefabInstance;
     private bool CanPlace = true;
     private float offset = 0;
     public static BuildBuilding CurrentlySelected;
@@ -34,10 +36,12 @@ public class BuildingBlueprint : MonoBehaviour
             transform.position = new Vector3(hit.point.x, hit.point.y + offset
                 , hit.point.z);
         }
-        if (CanPlace && Input.GetMouseButton(0))
+        if (CanPlace && Input.GetMouseButtonDown(0))
         {
-            Instantiate(prefab, transform.position, transform.rotation);
-            Destroy(gameObject);
+            animationPrefabInstance = Instantiate(animationPrefab, transform.position, transform.rotation);
+            this.gameObject.SetActive(false);
+            Invoke("CompleteConstruction", 3);
+
             CurrentlySelected = null;
         }
         if (Input.GetMouseButton(1))
@@ -87,6 +91,13 @@ public class BuildingBlueprint : MonoBehaviour
             print("overlap " + other.transform.localScale + " " + other.transform.lossyScale);
             offset = 0;// other.transform.localScale.y;       
         }
+    }
+    private void CompleteConstruction()
+    {
+        print("Construction Complete");
+        Instantiate(buildingPrefab, transform.position, transform.rotation);
+        Destroy(animationPrefabInstance);
+        Destroy(gameObject);
     }
     private void OnTriggerExit(Collider other)
     {

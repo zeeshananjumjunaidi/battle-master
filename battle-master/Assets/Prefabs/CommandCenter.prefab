@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892672367158241027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6.47}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1892672365407771081}
@@ -152,7 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9980961a43446a943abd113917a20542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5773940927847198564, guid: f8f8b498b836c8744861934234658e5f, type: 3}
+  animationPrefab: {fileID: 5079709744458650703, guid: 45b8adda007dad0428c547572af5d784,
+    type: 3}
+  buildingPrefab: {fileID: 5773940927847198564, guid: f8f8b498b836c8744861934234658e5f,
+    type: 3}
 --- !u!54 &5177281882602538840
 Rigidbody:
   m_ObjectHideFlags: 0

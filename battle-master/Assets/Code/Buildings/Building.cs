@@ -13,8 +13,11 @@ public class Building : MonoBehaviour, IBuildingBlueprint
     public BuildingType BuildingType;
     public Sprite Image;
 
-
+    public bool Selected = false;
+    public bool IsMine = false;
     Renderer rend;
+    [Header("UI")]
+    public GameObject SelectionUI;
 
     public void Construct()
     {
@@ -57,35 +60,59 @@ public class Building : MonoBehaviour, IBuildingBlueprint
     }
 
     Vector3 targetPosition;
+
+
     // Start is called before the first frame update
     void Start()
     {
         targetPosition = transform.position;
+        if (SelectionUI != null)
+        {
+            SelectionUI.SetActive(Selected);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        rend = GetComponentInChildren<Renderer>();
-        if (Input.GetMouseButton(0))
+        if (Selected)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            GameManager.Instance.SelectedBuilding = this;
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                targetPosition = new Vector3(hit.point.x, transform.position.y,
-                    hit.point.z);
-                transform.position = targetPosition;
-            }
+        }
+        else
+        {
+            if (GameManager.Instance.SelectedBuilding == this)
+                GameManager.Instance.SelectedBuilding = null;
+
         }
     }
 
     private void OnMouseDrag()
     {
-        rend.material.color -= Color.white * Time.deltaTime;
-       
-    }
 
+    }
+    private void OnMouseDown()
+    {
+        if (GameManager.Instance.SelectedBuilding != null)
+        {
+            GameManager.Instance.SelectedBuilding.UnSelect();
+        }
+        Selected = !Selected;
+        if (SelectionUI != null)
+        {
+            SelectionUI.SetActive(Selected);
+        }
+
+    }
+    public void UnSelect()
+    {
+        Selected = false;
+        if (SelectionUI != null)
+        {
+            SelectionUI.SetActive(Selected);
+            GameManager.Instance.SelectedBuilding = null;
+        }
+    }
 
 }

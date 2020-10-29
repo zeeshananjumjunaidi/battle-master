@@ -15,8 +15,8 @@ TagManager:
   - 
   - Ground
   - Building
-  - 
-  - 
+  - Selection
+  - 3D UI
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 3D UI
+    uniqueID: 1805877031
     locked: 0
